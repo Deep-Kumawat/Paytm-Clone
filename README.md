@@ -1,9 +1,8 @@
-## Paytm Clone
+## Simplified version of paytm
 
-#### Todo:
+#### It allows it's users to:
+    - Sign up
+    - Sign in
+    - Make transactions
 
-- [x] initialize backend
-- [x] initialize frontend
-- [ ] Setup database using mongo
-    - [x] Mongo schema
-- [ ] api/v1 Router
+
