@@ -3,6 +3,7 @@
 #### Todo:
 
 - [x] initialize backend
-- [ ] initialize frontend
+- [x] initialize frontend
 - [ ] Setup database using mongo
-    - [ ] Mongo schema
+    - [x] Mongo schema
+- [ ] api/v1 Router
