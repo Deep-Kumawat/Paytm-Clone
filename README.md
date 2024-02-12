@@ -12,6 +12,7 @@
     - [x] index route --> route to user route and account route
     - [x] user route --> post(/signin) | post(/signup) | get(/bulk) [to find users with firstname or lastname]
     - [x] account route --> get(/balance) | post(/transfer)
+    - [x] implement transactions in mongodb
 
 - [ ] Frontend
     - [x] React init
