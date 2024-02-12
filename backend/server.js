@@ -1,9 +1,11 @@
 const express = require('express');
-require('dotenv').config({path: '/home/deep/Deep/100x Devs/projects/paytm/.env'})
+require('dotenv').config({path: 'C:/Users/Dhanraj/Documents/Personal Projects/Paytm-Clone/.env'})
 const cors = require('cors');
 const app = express();
 const indexRoute = require('./routes/index');
+const bodyparser = require('body-parser');
 
+const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(bodyparser.json());
 app.use(express.json());
@@ -14,4 +16,4 @@ app.get('/', (req, res)=>{
     res.json({'message': 'hello'});
 })
 
-app.listen(process.env.PORT);
+app.listen(PORT);

@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
-require('dotenv').config({path: '/home/deep/Deep/100x Devs/projects/paytm/.env'});
+require('dotenv').config({path: 'C:/Users/Dhanraj/Documents/Personal Projects/Paytm-Clone/.env'});
 async function main(){
     await mongoose.connect(process.env.DATABASE_URL);
 }
+main();
 const userSchema = new mongoose.Schema({
     username: {
         type: String, 
@@ -13,28 +14,23 @@ const userSchema = new mongoose.Schema({
         minLength: 1,
         maxLength: 56
     },
-    firstName: {
+    firstname: {
         type: String, 
         required: true,
-        unique: true,
         trim: true,
         lowercase: true,
-        minLength: 1,
         maxLength: 56
     },
-    lastName: {
+    lastname: {
         type: String, 
         required: true,
-        unique: true,
         trim: true,
         lowercase: true,
-        minLength: 1,
         maxLength: 56
     },
     password: {
         type: String, 
         required: true,
-        unique: true,
         trim: true,
         lowercase: true,
         minLength: 8,
@@ -42,9 +38,24 @@ const userSchema = new mongoose.Schema({
     },
 });
 
+const accountsSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User',
+        required: true
+    },
+    balance: {
+        type: Number,
+        required: true
+    },
+});
+
+
 const User = mongoose.model('User', userSchema);
+const Account = mongoose.model('Account', accountsSchema);
 
 
 module.exports = {
-    User
+    User,
+    Account
 };
