@@ -2,7 +2,7 @@ import React from 'react'
 
 function Greeting(props) {
   return (
-    <div>
+    <div className='text-xl'>
       Hello, {props.username}
     </div>
   )
