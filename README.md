@@ -19,8 +19,8 @@
     - [x] Components
     - [x] /signup page
     - [x] /signin page
-    - [ ] /dashboard page
-    - [ ] /sendmoney page
+    - [x] /dashboard page
+    - [x] /sendmoney page
     - [ ] connect pages together
     - [ ] use axios to connect with backend
 
