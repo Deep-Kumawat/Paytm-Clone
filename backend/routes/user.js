@@ -1,5 +1,5 @@
 const express = require('express');
-const dotenv = require('dotenv').config({path: 'C:/Users/Dhanraj/Documents/Personal Projects/Paytm-Clone/.env'});
+const dotenv = require('dotenv').config({path: '/home/deep/Deep/Projects/Paytm-Clone/.env'});
 const app = express();
 const router = express.Router();
 const { z } = require("zod");
@@ -59,6 +59,11 @@ router.post('/signup', async (req, res)=>{
     const lastName = req.body.lastname;
     const password = req.body.password;
 
+    console.log("firstName:"+firstName);
+    console.log("lastName:"+lastName);
+    console.log("username:"+username);
+    console.log("password:"+password);
+
     // Validation
     const usernameValidation = zodString.safeParse(username);
     const firstNameValidation = zodString.safeParse(firstName);
@@ -66,7 +71,9 @@ router.post('/signup', async (req, res)=>{
     const passwordValidation = zodPassword.safeParse(password);
     
     if(!(usernameValidation.success && firstNameValidation.success && lastNameValidation.success && passwordValidation.success)){
-        res.status(411).json({message: "Invalid inputs"});
+        console.log("invalid inputs log");
+        res.status(400).json({message: "Invalid inputs"});
+        return;
     }
     // Verify that the user does not already exist
     const userInDB = await User.findOne({username:username});
@@ -99,31 +106,30 @@ router.post('/signin', async (req, res)=>{
 
     const usernameValidation = zodString.safeParse(username);
     if(!usernameValidation.success){
-        res.json({message: "Invalid inputs"});
+        res.status(400).json({message: "Invalid inputs"});
         return;
     }
-
+    
     // check if the user exists
-
+    
     const user = await User.findOne({username:username});
     if(user == null){
         // user does not exist
-        res.json({message: "User does not exist"});
+        console.log("no user found");
+        res.status(422).json({message: "User does not exist"});
         return;
     }
     
     // sign jwt
 
     const token = jwt.sign({username}, JWT_SECRET);
+    console.log("From /signin:" + token);
     res.status(200).json({message: token});
 
 })
 
 router.get('/bulk', async (req, res)=>{
     const filter = req.query.filter;
-    console.log(filter);
-    // const firstNameResults = await User.find({firstname: filter}, {firstname:1, lastname:1, _id:1});
-    // const lastNameResults = await User.find({lastname: filter});
     const results = await User.find({
         $or:[{"firstname":filter}, {"lastname":filter}]
     },{firstname:1, lastname:1, _id:1});

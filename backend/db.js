@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-require('dotenv').config({path: 'C:/Users/Dhanraj/Documents/Personal Projects/Paytm-Clone/.env'});
+require('dotenv').config({path: '/home/deep/Deep/Projects/Paytm-Clone/.env'});
 async function main(){
     await mongoose.connect(process.env.DATABASE_URL);
 }

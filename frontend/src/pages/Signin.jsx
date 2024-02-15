@@ -1,23 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { BrowserRouter } from 'react-router-dom'
 import Heading from '../components/Heading'
 import Subheading from '../components/Subheading'
 import InputField from '../components/InputField'
 import SubmitButton from '../components/SubmitButton'
 import BottomWarning from '../components/BottomWarning'
+import Error from './Error'
+import axios from 'axios'
 
-function goToDashboard(){
 
+function signInOnClick(username, password, setErrorFlag, setStatus){
+  axios({
+    method: "post",
+    url: `http://localhost:3000/api/v1/user/signin`,
+    data: {
+      username: username,
+      password: password
+    }
+  })
+  .then(()=>{
+    console.log("inside then of signin");
+    window.open('http://localhost:5173/dashboard')
+  })
+  .catch((error)=>{
+    setErrorFlag(true);
+    setStatus(error.response.status);
+    console.log("inside error of signin error");
+  });
+  
 }
 
 function Signin() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorFlag, setErrorFlag] = useState(false);
+  const [status, setStatus] = useState(200);
   return (
     <div className='p-5'>
-      <Heading text="Sign In" center={true}></Heading>
-      <Subheading text="Enter your credentials to access your account"></Subheading>
-      <InputField name="email" type="text" label="Email" placeholder="johndoe@example.com"></InputField>
-      <InputField name="password" type="password" label="Password" ></InputField>
-      <SubmitButton text="Sign In" onClick={goToDashboard}></SubmitButton>
-      <BottomWarning text="Don't have an account? " linkText="Sign Up" link="#"></BottomWarning>
+      <Error status={status} flag={errorFlag} />
+      <Heading text="Sign In" center={true} />
+      <Subheading text="Enter your credentials to access your account" />
+      <InputField name="email" type="text" label="Email" placeholder="johndoe@example.com" onChange={(e) => setUsername(e.target.value)} />
+      <InputField name="password" type="password" label="Password" onChange={(e)=>setPassword(e.target.value)} />
+      <SubmitButton text="Sign In" onClick={()=>signInOnClick(username, password, setErrorFlag, setStatus)} bgcolor="bg-black" />
+      <BottomWarning text="Don't have an account? " linkText="Sign Up" link="http://localhost:5173/signup" />
     </div>
   )
 }

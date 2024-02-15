@@ -1,5 +1,5 @@
 const express = require('express');
-require('dotenv').config({path: 'C:/Users/Dhanraj/Documents/Personal Projects/Paytm-Clone/.env'})
+require('dotenv').config({path: '/home/deep/Deep/Projects/Paytm-Clone/.env'})
 const cors = require('cors');
 const app = express();
 const indexRoute = require('./routes/index');
@@ -13,7 +13,7 @@ app.use(express.json());
 app.use('/api/v1', indexRoute);
 
 app.get('/', (req, res)=>{
-    res.json({'message': 'hello'});
+    res.json({'message': 'hello, this is the home page'});
 })
 
 app.listen(PORT);

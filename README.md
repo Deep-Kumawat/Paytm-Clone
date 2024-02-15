@@ -21,8 +21,8 @@
     - [x] /signin page
     - [x] /dashboard page
     - [x] /sendmoney page
-    - [ ] connect pages together
-    - [ ] use axios to connect with backend
+    - [X] connect pages together
+    - [X] use axios to connect with backend
 
 
 
