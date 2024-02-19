@@ -18,9 +18,11 @@ function signInOnClick(username, password, setErrorFlag, setStatus){
       password: password
     }
   })
-  .then(()=>{
+  .then((response)=>{
     console.log("inside then of signin");
-    window.open('http://localhost:5173/dashboard')
+    // console.log(response.data);
+    localStorage.setItem('token', response.data.token);
+    window.open('http://localhost:5173/dashboard');
   })
   .catch((error)=>{
     setErrorFlag(true);

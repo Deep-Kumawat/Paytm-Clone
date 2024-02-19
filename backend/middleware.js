@@ -4,6 +4,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 function authMiddleware(req, res, next){
     let token = req.headers.authorization;
+    console.log(`------------------Authorization Header: ${token}--------------------------------`);
     if(!token || !token.startsWith("Bearer ")){
         console.log("middleware: Invalid token!");
         // res.status(403).json({messsage: ""});
@@ -12,6 +13,7 @@ function authMiddleware(req, res, next){
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
         req.username = decoded.username;
+        console.log("verified by middleware good to go from here, no problem in middleware");
         next();
     } catch (error) {
         console.log("bad token!");

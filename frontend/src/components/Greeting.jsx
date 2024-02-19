@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Greeting(props) {
+function Greeting({ firstName }) {
   return (
     <div className='text-xl'>
-      Hello, {props.username}
+      Hello, {firstName}
     </div>
   )
 }

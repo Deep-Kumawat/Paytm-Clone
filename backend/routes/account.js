@@ -11,7 +11,7 @@ router.get('/', (req, res)=>{
 router.get('/balance', authMiddleware, async (req, res)=>{
     const username = req.username;
     const result = await User.find({username: username}, {_id:1});
-    console.log(result);
+    console.log("result: " + result);
     const balanceResult = await Account.findOne({userId: result}, {balance:1});
     res.json({balance: balanceResult.balance});
 })

@@ -23,6 +23,8 @@
     - [x] /sendmoney page
     - [X] connect pages together
     - [X] use axios to connect with backend
+    - [ ] Display balance on /dashboard
+    - [ ] Display all the users on /dashboard
 
 
 

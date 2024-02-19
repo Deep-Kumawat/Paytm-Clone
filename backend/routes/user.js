@@ -13,8 +13,22 @@ app.use(express.json());
 // input validation
 const zodString = z.string();
 const zodPassword = z.string().min(8);
-
+const zodSignInBody = z.object({
+    username: zodString,
+    password: zodPassword
+})
+router.get('/', (req, res)=>{
+    console.log("log from get request of user.js");
+    res.json({message: "hello from user.js"});
+})
+router.get('/user-info', authMiddleware, async (req, res)=>{
+    console.log("log from get request of user-info");
+    const user = await User.findOne({username: req.username});
+    console.log(user.firstname);
+    res.status(200).json({firstName: user.firstname});
+})
 router.put('/', authMiddleware, async (req, res)=>{
+    console.log("------------------------------------------------log from put request of user.js");
     const username = req.username;
     const firstName = req.headers.fname;
     const lastName = req.headers.lname;
@@ -99,20 +113,19 @@ router.post('/signup', async (req, res)=>{
 })
 
 router.post('/signin', async (req, res)=>{
-    const username = req.body.username;
-    const password = req.body.password;
+    
 
     // input validation
 
-    const usernameValidation = zodString.safeParse(username);
-    if(!usernameValidation.success){
+    const { success } = zodSignInBody.safeParse(req.body);
+    if(!success){
         res.status(400).json({message: "Invalid inputs"});
         return;
     }
-    
+    console.log(`from signin --------${req.body}------"`);
     // check if the user exists
-    
-    const user = await User.findOne({username:username});
+    const username = req.body.username;
+    const user = await User.findOne({username: username});
     if(user == null){
         // user does not exist
         console.log("no user found");
@@ -122,13 +135,16 @@ router.post('/signin', async (req, res)=>{
     
     // sign jwt
 
-    const token = jwt.sign({username}, JWT_SECRET);
-    console.log("From /signin:" + token);
-    res.status(200).json({message: token});
-
+    const token = "Bearer " + jwt.sign({username}, JWT_SECRET);
+    console.log("From /signin this is your token:" + token);
+    // window.localStorage.token = token;
+    // req.headers.authorization = token; this line does not work. We need to store the token in local storage
+    console.log(`------------------- from signin route REQ.HEADERS.AUTHORIZATION: ${req.headers.authorization}`);
+    res.status(200).json({token: token});
 })
 
 router.get('/bulk', async (req, res)=>{
+    // gets users by their firstname/lastname
     const filter = req.query.filter;
     const results = await User.find({
         $or:[{"firstname":filter}, {"lastname":filter}]
